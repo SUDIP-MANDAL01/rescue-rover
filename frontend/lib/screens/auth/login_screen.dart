@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../providers/auth_provider.dart';
 import '../../core/theme.dart';
 
@@ -266,7 +267,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             ),
                             TextButton(
                               onPressed: () =>
-                                  Navigator.pushNamed(context, '/register'),
+                                  context.go('/register'),
                               child: const Text(
                                 'Sign Up',
                                 style: TextStyle(

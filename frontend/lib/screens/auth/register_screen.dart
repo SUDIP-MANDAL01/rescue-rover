@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../providers/auth_provider.dart';
 import '../../core/theme.dart';
 
@@ -72,7 +73,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
             ),
           ),
         );
-        Navigator.pop(context);
+        context.go('/login');
       } else {
         final error = ref.read(authProvider).error ?? 'Registration failed';
         ScaffoldMessenger.of(context).showSnackBar(
@@ -147,7 +148,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen>
                           IconButton(
                             icon: const Icon(Icons.arrow_back_ios,
                                 color: Colors.white),
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => context.go('/login'),
                           ),
                           const SizedBox(width: 8),
                           const Text(
