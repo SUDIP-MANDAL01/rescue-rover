@@ -1,0 +1,37 @@
+-- SQL script to create the Rescue Rover database and tables for MySQL
+CREATE DATABASE IF NOT EXISTS rescuerover;
+USE rescuerover;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL UNIQUE,
+    email_verified BOOLEAN DEFAULT FALSE,
+    phone_verified BOOLEAN DEFAULT FALSE,
+    rover_key VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS rovers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rover_key VARCHAR(50) NOT NULL UNIQUE,
+    owner_id INT,
+    status VARCHAR(50) DEFAULT 'Offline',
+    battery INT DEFAULT 0,
+    activity VARCHAR(50) DEFAULT 'Idle',
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS alerts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rover_id INT,
+    type VARCHAR(50) NOT NULL,
+    message VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'Active',
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    location VARCHAR(255),
+    FOREIGN KEY (rover_id) REFERENCES rovers(id) ON DELETE CASCADE
+);
