@@ -1,9 +1,14 @@
 from datetime import datetime, timedelta
 from typing import Optional
+# pyrefly: ignore [missing-import]
 import jwt
+# pyrefly: ignore [missing-import]
 import bcrypt
+# pyrefly: ignore [missing-import]
 from fastapi import Depends, HTTPException, status
+# pyrefly: ignore [missing-import]
 from fastapi.security import OAuth2PasswordBearer
+# pyrefly: ignore [missing-import]
 from sqlalchemy.orm import Session
 from . import models, schemas, database
 
@@ -11,6 +16,8 @@ SECRET_KEY = "supersecretkey_rescuerover"  # Change this in production
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
+CryptContext = None
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 

@@ -44,26 +44,49 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state, child) {
           return Scaffold(
             body: child,
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _calculateSelectedIndex(state),
-              onTap: (index) {
-                switch (index) {
-                  case 0:
-                    context.go('/');
-                    break;
-                  case 1:
-                    context.go('/alerts');
-                    break;
-                  case 2:
-                    context.go('/profile');
-                    break;
-                }
-              },
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.warning), label: 'Alerts'),
-                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-              ],
+            bottomNavigationBar: Container(
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceDark,
+                border: Border(
+                  top: BorderSide(
+                    color: AppTheme.dividerColor.withValues(alpha: 0.5),
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: BottomNavigationBar(
+                currentIndex: _calculateSelectedIndex(state),
+                onTap: (index) {
+                  switch (index) {
+                    case 0:
+                      context.go('/');
+                      break;
+                    case 1:
+                      context.go('/alerts');
+                      break;
+                    case 2:
+                      context.go('/profile');
+                      break;
+                  }
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.dashboard_outlined),
+                    activeIcon: Icon(Icons.dashboard),
+                    label: 'Dashboard',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.notifications_outlined),
+                    activeIcon: Icon(Icons.notifications),
+                    label: 'Alerts',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline),
+                    activeIcon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                ],
+              ),
             ),
           );
         },
