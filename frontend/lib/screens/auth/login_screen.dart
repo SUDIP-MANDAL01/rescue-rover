@@ -51,7 +51,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     final success = await ref
         .read(authProvider.notifier)
         .login(_emailController.text.trim(), _passwordController.text);
-    if (!success && mounted) {
+    if (success && mounted) {
+      context.go('/');
+    } else if (!success && mounted) {
       final error = ref.read(authProvider).error ?? 'Login failed';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
