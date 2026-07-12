@@ -58,8 +58,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
       return true;
     } on DioException catch (e) {
-      final msg = e.response?.data['detail'] ?? 'Login failed';
+      final msg = e.response?.data['detail'] ?? e.message ?? 'Login failed';
       state = state.copyWith(isLoading: false, error: msg.toString());
+      return false;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: 'System error: ${e.toString()}');
       return false;
     }
   }
@@ -71,8 +74,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
       return true;
     } on DioException catch (e) {
-      final msg = e.response?.data['detail'] ?? 'Registration failed';
+      final msg = e.response?.data['detail'] ?? e.message ?? 'Registration failed';
       state = state.copyWith(isLoading: false, error: msg.toString());
+      return false;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: 'System error: ${e.toString()}');
       return false;
     }
   }
